@@ -5,7 +5,7 @@ import PageContent from "../../../components/PageContent";
 export default function UserDetailsPage() {
     return (
         <>
-            <PageHeading title={'My Profile'} />
+            <PageHeading title={'User Profile'} />
 
             <PageContent>
                 <UserDetailsSection />

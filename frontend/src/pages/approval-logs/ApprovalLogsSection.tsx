@@ -1,19 +1,19 @@
+import { useState } from "react";
+import Details from "../../components/Details"
 import SectionHeading from "../../components/SectionHeading"
 import ApprovalLogsTable from "./ApprovalLogsTable"
+import formatDate from "../../utils/formatDate";
 
 export default function ApprovalLogsContent() {
-
+    const [lastUpdated, setLastUpdated] = useState<string | undefined>(undefined);
 
     return (
         <>
             <SectionHeading>
-                <div>
-                    <h2 className="text-darker font-bold">All Approvals</h2>
-                    <p className="text-dark font-medium">Last Updated: Aug 9, 2025</p>
-                </div>
+                <Details subtitle={'All Approvals'} modifiedDate={lastUpdated && formatDate(lastUpdated)} />
             </SectionHeading>
 
-            <ApprovalLogsTable />
+            <ApprovalLogsTable setLastUpdated={setLastUpdated}/>
         </>
     )
 }

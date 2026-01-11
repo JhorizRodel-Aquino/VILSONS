@@ -46,7 +46,7 @@ const approvalLogColumns: Column<ApprovalLog>[] = [
     { key: "action", label: "Action", render: (value) => value as ReactElement },
 ];
 
-export default function ApprovalLogsTable() {
+export default function ApprovalLogsTable({setLastUpdated}: {setLastUpdated: (date: string | undefined) => void}) {
     const branchOptions = [
         { value: '', label: 'All Branches' },
         ...(getBranches() || [])
@@ -71,13 +71,18 @@ export default function ApprovalLogsTable() {
                 reload();
                 setRemarks("")
                 setShowRejectModal(false)
-                setSelectedId(null); 
+                setSelectedId(null);
             }
             // Reset states regardless of success/failure
-            
+
         }
     };
 
+    useEffect(() => {
+        if (data && data.lastUpdatedAt) {
+            setLastUpdated(data?.lastUpdatedAt);
+        }
+    }, [data, setLastUpdated]);
 
 
     if (loading) return <Loading />;
@@ -142,7 +147,7 @@ export default function ApprovalLogsTable() {
 
                         <div className="flex justify-end items-center gap-[20px]">
                             <Button variant="gray" label="Cancel" onClick={() => setShowRejectModal(false)} disabled={approveLoading} />
-                            <Button variant="primary" label={approveLoading ? "Rejecting..." : "Reject"} onClick={() => {handleApproval("reject", selectedId)}} disabled={approveLoading} />
+                            <Button variant="primary" label={approveLoading ? "Rejecting..." : "Reject"} onClick={() => { handleApproval("reject", selectedId) }} disabled={approveLoading} />
                         </div>
                     </form>
                     <div className="backdrop"></div>

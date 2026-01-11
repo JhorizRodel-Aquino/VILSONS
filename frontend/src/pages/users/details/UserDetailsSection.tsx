@@ -98,7 +98,7 @@ export default function UserDetailsSection() {
                         <Detail label='Phone Number' value={phone} />
                         <Detail label='Roles'
                             value={
-                                <div className="flex gap-3">
+                                <div className="flex gap-3 flex-wrap">
                                     {
                                         roles && (roles as (Record<string, any>)[]).map((role, i) => (
                                             <div className="font-medium px-2 py-1 bg-gray rounded-[8px]" key={i}>
@@ -113,7 +113,7 @@ export default function UserDetailsSection() {
                         {(branches && (branches as (Record<string, any>)[]).length > 0) &&
                             <Detail label='Branches'
                                 value={
-                                    <div className="flex gap-3">
+                                    <div className="flex gap-3 flex-wrap">
                                         {
                                             branches && (branches as (Record<string, any>)[]).map((branch, i) => (
                                                 <div className="font-medium px-2 py-1 bg-gray rounded-[8px]" key={i}>

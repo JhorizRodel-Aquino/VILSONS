@@ -81,6 +81,7 @@ export default function BranchesTable({ setPresetData, reloadFlag, setShowModal,
         (item: Record<string, any>) => ({
             branch: item.branchName,
             address: item.address,
+            datetime: item.createdAt,
             options:
                 <Options
                     onEdit={hasPermissions(['edit_branch']) ? () => handleEdit(item) : undefined}

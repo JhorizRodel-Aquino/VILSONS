@@ -5,6 +5,7 @@ import ErrorModal from "../../components/ErrorModal";
 import validateAndSanitize, { type ValidationSchema } from "../../utils/validateAndSanitize";
 import usePostPutData from "../../hooks/usePostPutData";
 import { invalidateCache } from "../../hooks/useGetData";
+import { invalidateBranches } from "../../services/branchService";
 
 export type FormData = {
     branch: string,
@@ -56,6 +57,7 @@ export default function BranchesModal({ setShowModal, onSuccess, action, presetD
 
             invalidateCache(`/api/approval-logs`);
             invalidateCache(`/api/activity-logs`);
+            invalidateBranches();
         }
     };
 

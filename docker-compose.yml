@@ -4,7 +4,7 @@ services:
     container_name: vilsons-mysql
     environment:
       MYSQL_ROOT_PASSWORD: vilsons
-      MYSQL_DATABASE: VILSONS_FINAL
+      MYSQL_DATABASE: VILSONS
     volumes:
       - ./mysql-data:/var/lib/mysql
     ports:

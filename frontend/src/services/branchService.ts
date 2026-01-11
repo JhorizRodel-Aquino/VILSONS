@@ -1,4 +1,5 @@
 import decodeToken from "../utils/decodeToken";
+import { refresh } from "./authService";
 
 let cachedBranchOptions: { value: string, label: string }[] | undefined;
 
@@ -14,4 +15,9 @@ export function getBranches() {
     else {
         return setBranches()
     }
+}
+
+export async function invalidateBranches() {
+    await refresh()
+    cachedBranchOptions = undefined;
 }

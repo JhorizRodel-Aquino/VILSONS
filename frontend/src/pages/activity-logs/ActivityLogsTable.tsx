@@ -9,6 +9,7 @@ import ErrorModal from "../../components/ErrorModal";
 import formatDate from "../../utils/formatDate";
 import Selection from "../../components/Selection";
 import { getBranches } from "../../services/branchService";
+import { useEffect } from "react";
 
 type ActivityLog = {
     activity: string;
@@ -24,12 +25,18 @@ const activityLogColumns: Column<ActivityLog>[] = [
     { key: "datetime", label: "Datetime", render: (value) => formatDate(value) },
 ];
 
-export default function ActivityLogsTable() {
+export default function ActivityLogsTable({setLastUpdated}: {setLastUpdated: (date: string | undefined) => void}) {
     const branchOptions = [
         { value: '', label: 'All Branches' },
         ...(getBranches() || [])
     ];
     const { data, loading, error, closeError, reload, searchParams, setSearchParams, dateRangeParams, setDateRangeParams, branchParams, setBranchParams } = useGetByDateRange('/api/activity-logs');
+
+    useEffect(() => {
+        if (data && data.lastUpdatedAt) {
+            setLastUpdated(data?.lastUpdatedAt);
+        }
+    }, [data, setLastUpdated]);
 
     if (loading) return <Loading />;
 
