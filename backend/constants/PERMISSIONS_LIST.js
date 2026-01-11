@@ -74,6 +74,7 @@ const PERMISSIONS_LIST = {
 
   EDIT_OWN_PROFILE_DETAILS: "edit_own_profile_details",
   VIEW_OWN_PROFILE: "view_own_profile",
+  EDIT_OWN_PASSWORD: "edit_own_password",
 
   CUSTOMER_DASHBOARD_JOB_ORDERS: "view_customer_dashboard_job_orders",
   CUSTOMER_DASHBOARD_BALANCE: "view_customer_dashboard_balance",

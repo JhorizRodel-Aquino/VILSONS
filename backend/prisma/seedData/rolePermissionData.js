@@ -43,15 +43,29 @@ async function getRolePermissionData(tx) {
     },
     {
       roleId: await roleIdFinder(ROLES_LIST.EMPLOYEE, tx),
+      permissionId: await permissionIdFinder(
+        PERMISSIONS_LIST.CHANGE_USER_PASSWORD, tx
+      ),
+      approval: false,
+    },
+    {
+      roleId: await roleIdFinder(ROLES_LIST.EMPLOYEE, tx),
       permissionId: await permissionIdFinder(PERMISSIONS_LIST.VIEW_OWN_PROFILE, tx),
       approval: false,
     },
+    {
+      roleId: await roleIdFinder(ROLES_LIST.EMPLOYEE, tx),
+      permissionId: await permissionIdFinder(PERMISSIONS_LIST.EDIT_OWN_PASSWORD, tx),
+      approval: false,
+    }
   ];
 
   // CONTRACTOR — ONLY these 7
   const contractorPermissions = [
     PERMISSIONS_LIST.EDIT_OWN_PROFILE_DETAILS,
     PERMISSIONS_LIST.VIEW_OWN_PROFILE,
+    PERMISSIONS_LIST.EDIT_OWN_PASSWORD,
+
     PERMISSIONS_LIST.VIEW_TRUCK_DETAILS,
     PERMISSIONS_LIST.CONTRACTOR_DASHBOARD_JOB_ORDERS,
     PERMISSIONS_LIST.CONTRACTOR_DASHBOARD_BALANCE,
@@ -73,6 +87,7 @@ async function getRolePermissionData(tx) {
   const customerPermissions = [
     PERMISSIONS_LIST.EDIT_OWN_PROFILE_DETAILS,
     PERMISSIONS_LIST.VIEW_OWN_PROFILE,
+    PERMISSIONS_LIST.EDIT_OWN_PASSWORD,
     PERMISSIONS_LIST.CUSTOMER_DASHBOARD_JOB_ORDERS,
     PERMISSIONS_LIST.CUSTOMER_DASHBOARD_BALANCE,
     PERMISSIONS_LIST.VIEW_CUSTOMER_OWN_TRUCKS,

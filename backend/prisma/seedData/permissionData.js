@@ -497,6 +497,12 @@ async function getPermissionData() {
       method: "view",
       description: "View own profile",
     },
+    {
+      module: "Profile",
+      permissionName: PERMISSIONS_LIST.EDIT_OWN_PASSWORD,
+      method: "edit",
+      description: "Edit own password",
+    }
   ];
 
   return permissions;
