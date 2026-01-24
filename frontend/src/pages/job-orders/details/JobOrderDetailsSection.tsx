@@ -100,7 +100,7 @@ export default function CustomerDetailsSection() {
                         <Detail label='Plate' value={
                             <Link to={`/trucks/${truckId}`}>{plate}</Link>
                         } />
-                        <Detail label='Make' value={make} />
+                        <Detail label='Chassis' value={make} />
                         <Detail label='Model' value={model} />
                         <Detail label='Engine' value={engine} />
                     </div>

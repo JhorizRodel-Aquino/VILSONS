@@ -360,7 +360,7 @@ export default function JobOrderModal({ branchOptions, setShowModal, presetData,
                                             />
                                             <Field.Text
                                                 id="make"
-                                                label="Make"
+                                                label="Chassis"
                                                 value={formData.make}
                                                 onChange={(e) => {
                                                     setFormData({ ...formData, make: e.target.value });

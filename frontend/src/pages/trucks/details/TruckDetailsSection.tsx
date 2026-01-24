@@ -6,7 +6,7 @@ import Button from "../../../components/Button";
 import formatDate from "../../../utils/formatDate";
 import ChangeOwnerModal from "../ChangeOwnerModal";
 import useGetData from "../../../hooks/useGetData";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import ErrorModal from "../../../components/ErrorModal";
 import Loading from "../../../components/Loading";
 import ProfilePicture from "../../../components/ProfilePicture";
@@ -61,7 +61,7 @@ export default function TruckDetailsSection() {
                             <dd className="text-dark">{plate}</dd>
                         </dl>
                         <dl className="flex gap-2">
-                            <dt className="font-semibold text-darker">Make:</dt>
+                            <dt className="font-semibold text-darker">Chassis:</dt>
                             <dd className="text-dark">{make}</dd>
                         </dl>
                         <dl className="flex gap-2">
@@ -113,8 +113,8 @@ export default function TruckDetailsSection() {
                         <div className="grid gap-5">
                             {owners?.map((owner: any, i: any) => (
                                 <div key={i}>
-                                    <Detail label={`${formatDate(owner.startDate, "date")} - ${owner.endDate ? formatDate(owner.endDate, "date") : 'Current'}`} value={owner.fullName} />
-                                    <p className=" -mt-1 text-sm text-darker">@{owner.username}</p>
+                                    <Detail label={`${formatDate(owner.startDate, "date")} - ${owner.endDate ? formatDate(owner.endDate, "date") : 'Current'}`} value={<Link to={`/customers/${owner.customerId}`}>{owner.fullName}</Link>} />
+                                    <p className=" -mt-1 text-sm text-darker"><Link to={`/customers/${owner.customerId}`}>@{owner.username}</Link></p>
                                 </div>
                             ))}
                         </div>
@@ -122,10 +122,10 @@ export default function TruckDetailsSection() {
                 </div>
             </div>
 
-            {error ? <ErrorModal error={error!} closeError={closeError} /> : 
+            {error ? <ErrorModal error={error!} closeError={closeError} /> :
                 <>
                     {showModal === "edit" && <TrucksModal setShowModal={setShowModal} onSuccess={reload} action={showModal} id={id} presetData={presetData} />}
-                    {showModal === "owner" && <ChangeOwnerModal setShowModal={setShowModal} onSuccess={reload} truckId={id ?? ''} selectedTruck={{ plate: plate }} invalidateData={{customerId: owners[0].customerId}} />}
+                    {showModal === "owner" && <ChangeOwnerModal setShowModal={setShowModal} onSuccess={reload} truckId={id ?? ''} selectedTruck={{ plate: plate }} invalidateData={{ customerId: owners[0].customerId }} />}
                 </>
             }
         </>

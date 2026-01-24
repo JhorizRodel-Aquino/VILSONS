@@ -81,7 +81,7 @@ export default function TrucksModal({ setShowModal, onSuccess, action, presetDat
 
                                     <Field.Text
                                         id="make"
-                                        label="Make"
+                                        label="Chassis"
                                         value={formData.make}
                                         onChange={(e) => {
                                             setFormData({ ...formData, make: e.target.value });

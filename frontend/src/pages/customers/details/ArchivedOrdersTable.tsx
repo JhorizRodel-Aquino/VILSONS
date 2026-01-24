@@ -1,17 +1,19 @@
+import { Link } from "react-router";
 import Table from "../../../components/table/Table";
 import type { Column } from "../../../components/table/Table";
 import formatPesoFromCents from "../../../utils/formatPesoFromCents";
+import type { ReactElement } from "react";
 
 type ArchivedOrder = {
-    jobNumber: string;
-    plateNumber: string;
+    jobNumber: ReactElement;
+    plateNumber: ReactElement;
     totalBill: number;
     balance: number;
 };
 
 const archivedOrderColumns: Column<ArchivedOrder>[] = [
-    { key: "jobNumber", label: "Job Number" },
-    { key: "plateNumber", label: "Plate Number" },
+    { key: "jobNumber", label: "Job Number", render: (value) => value as React.ReactElement },
+    { key: "plateNumber", label: "Plate Number", render: (value) => value as React.ReactElement },
     { key: "totalBill", label: "Total Bill", render: (value) => formatPesoFromCents(value as number) },
     { key: "balance", label: "Customer Balance", render: (value) => formatPesoFromCents(value as number) },
 ];
@@ -22,8 +24,8 @@ export default function ArchivedOrdersTable({ data }: { data: [] }) {
 
     const archivedOrders: ArchivedOrder[] = archives.map(
         (item: Record<string, any>) => ({
-            jobNumber: item.jobOrderCode,
-            plateNumber: item.plate,
+            jobNumber: <Link to={`/job-orders/${item.id}`}>{item.jobOrderCode}</Link>,
+            plateNumber: <Link to={`/trucks/${item.truckId}`}>{item.plate}</Link>,
             totalBill: item.totalBill,
             balance: item.balance,
         })

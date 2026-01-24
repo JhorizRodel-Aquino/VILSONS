@@ -28,7 +28,7 @@ type Truck = {
 
 const truckColumns: Column<Truck>[] = [
     { key: "plateNumber", label: "Plate Number", render: (value) => value as React.ReactElement },
-    { key: "make", label: "Make" },
+    { key: "make", label: "Chassis" },
     { key: "model", label: "Model" },
     { key: "engine", label: "Engine" },
     { key: "owner", label: "Owner", render: (value) => value as React.ReactElement },
