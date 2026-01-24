@@ -18,7 +18,7 @@ export type FormData = {
     profile?: File | null;
     name?: string;
     username?: string;
-    phone?: number;
+    phone?: string;
     email?: string;
     roles: string[];
     branches?: string[];
@@ -470,7 +470,7 @@ export default function UsersModal({
                                         noSpinner={true}
                                         value={formData.phone}
                                         onChange={(e) =>
-                                            setFormData({ ...formData, phone: Number(e.target.value) })
+                                            setFormData({ ...formData, phone: e.target.value })
                                         }
                                     />
                                 </div>

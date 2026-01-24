@@ -8,7 +8,7 @@ import usePostPutData from "../../hooks/usePostPutData";
 export type FormData = {
     name: string;
     email: string;
-    phone?: number;
+    phone?: string;
     profile?: File | null;
 }
 
@@ -104,7 +104,7 @@ export default function MyInfoModal({ setShowModal, onSuccess, presetData }: MyI
                                     noSpinner={true}
                                     value={formData.phone}
                                     onChange={(e) => {
-                                        setFormData({ ...formData, phone: +e.target.value });
+                                        setFormData({ ...formData, phone: e.target.value });
                                     }}
                                 />
                             </div>

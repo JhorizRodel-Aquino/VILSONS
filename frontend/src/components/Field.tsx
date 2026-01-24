@@ -217,7 +217,7 @@ Field.Number = function Number({ id, label, width = 'hug', placeholder = '', val
                     name={label}
                     type="number"
                     placeholder={placeholder}
-                    min={min ?? 0}
+                    min={min ?? undefined}
                     max={max ?? undefined}
                     className={`input ${noSpinner && 'hide-spinner'}`}
                     value={value || ""}

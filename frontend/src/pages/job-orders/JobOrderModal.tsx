@@ -39,7 +39,7 @@ export type FormData = {
     customerId?: string,
     name?: string,
     username?: string,
-    phone?: number | string,
+    phone?: string,
     email?: string,
     customerImage?: File | null,
 
@@ -498,7 +498,7 @@ export default function JobOrderModal({ branchOptions, setShowModal, presetData,
                                             noSpinner={true}
                                             value={formData.phone || ""}
                                             onChange={(e) => {
-                                                setFormData({ ...formData, phone: +e.target.value });
+                                                setFormData({ ...formData, phone: e.target.value });
                                             }}
                                         />
                                         <Field.Email
