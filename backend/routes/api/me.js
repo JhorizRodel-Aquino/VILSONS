@@ -10,6 +10,8 @@ const truckController = require("../../controllers/customer/truckController");
 const financeController = require("../../controllers/contractor/financeController");
 const transactionController = require("../../controllers/customer/transactionController");
 const profileController = require("../../controllers/profileController");
+const branchController = require("../../controllers/admin/branchController");
+
 const verifyPermission = require("../../middleware/verifyPermissions");
 const PERMISSIONS_LIST = require("../../constants/PERMISSIONS_LIST");
 const createUploader = require("../../middleware/imageHandler");
@@ -88,5 +90,10 @@ router.route("/assigned-job-orders/action/:action/:id")
 router.route("/assigned-job-orders/:id")
 .get(verifyPermission(PERMISSIONS_LIST.VIEW_CONTRACTOR_ASSIGNED_JOB_ORDER_DETAILS), assignedJobOrderController.getAssignedJobOrder)
 
+
+
+// branch routes
+router.route("/branch")
+.get(verifyPermission(PERMISSIONS_LIST.VIEW_BRANCHES), branchController.getMyBranch);
 
 module.exports = router;

@@ -279,10 +279,31 @@ const getBranch = async (req, res) => {
   }
 };
 
+const getMyBranch = async (req, res) => {
+  if (!req.id)
+    return res.status(400).json({ message: "ID is required" });
+
+  try {
+    const branch = await prisma.branch.findUnique({
+      where: { id: req.id },
+    });
+
+    if (!branch) {
+      return res.status(404).json({ message: "Branch not found" });
+    }
+    return res.status(201).json({ data: branch });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
+
+
 module.exports = {
   createBranch,
   editBranch,
   deleteBranch,
   getAllBranches,
   getBranch,
+  getMyBranch,
 };

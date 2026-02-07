@@ -6,7 +6,7 @@ const getContractorDashboard = async (req, res) => {
     const result = await prisma.$transaction(async (tx) => {
       // 1️⃣ Find contractor by userId
       const contractor = await tx.contractor.findUnique({
-        where: { userId: "9727527a-96f3-4f08-8fb6-405ce07ff918" }, // change to req.id for dynamic
+        where: { userId: req.id }, // change to req.id for dynamic
         select: { id: true },
       });
 
