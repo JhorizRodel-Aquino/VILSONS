@@ -1,15 +1,13 @@
 function sanitize(string) {
   const map = {
-    "&": "&amp;",
     "<": "&lt;",
     ">": "&gt;",
     '"': "&quot;",
-    "'": "&#39;",
     "/": "&#x2F;",
     "`": "&#x60;",
     "=": "&#x3D;",
   };
-  const reg = /[&<>"'`=\/]/g;
+  const reg = /[<>"`=\/]/g;
   return string.replace(reg, (match) => map[match]);
 }
 

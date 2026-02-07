@@ -19,7 +19,7 @@ const createTransaction = async (req, res) => {
     const jobOrder = await prisma.jobOrder.findFirst({
       where: { jobOrderCode },
       include: {
-        materials: { select: { price: true, quantity: true } },
+        materials: { select: { price: true, quantity: true, selling: true } },
         transactions: { select: { amount: true } },
       },
     });
@@ -29,7 +29,7 @@ const createTransaction = async (req, res) => {
 
     // Compute totals
     const totalMaterialCost = jobOrder.materials?.reduce(
-      (sum, m) => sum + Number(m.price) * Number(m.quantity),
+      (sum, m) => sum + Number(m.selling) * Number(m.quantity),
       0
     ) || 0;
 
@@ -111,7 +111,7 @@ const editTransaction = async (req, res) => {
     const jobOrder = await prisma.jobOrder.findFirst({
       where: { jobOrderCode: jobOrderCode ?? transaction.jobOrderCode },
       include: {
-        materials: { select: { price: true, quantity: true } },
+        materials: { select: { price: true, quantity: true, selling: true } },
         transactions: { select: { id: true, amount: true } },
       },
     });
@@ -120,7 +120,7 @@ const editTransaction = async (req, res) => {
 
     // 3️⃣ Compute total bill and transactions
     const totalMaterialCost = jobOrder.materials?.reduce(
-      (sum, m) => sum + Number(m.price) * Number(m.quantity),
+      (sum, m) => sum + Number(m.selling) * Number(m.quantity),
       0
     ) || 0;
 

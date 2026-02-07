@@ -986,11 +986,12 @@ const handleJobOrderApproval = async (request, updateUser, tx) => {
             materialName: m.materialName, // Changed from m.name to m.materialName to match your createJobOrder
             quantity: Number(m.quantity), // Added Number() conversion
             price: Number(m.price), // Added Number() conversion
+            selling: Number(m.selling), // Added Number() conversion
           })),
         });
 
         totalMaterialCost = materials.reduce(
-          (sum, m) => sum + Number(m.price) * Number(m.quantity), // Added Number() conversions
+          (sum, m) => sum + Number(m.selling) * Number(m.quantity), // Added Number() conversions
           0
         );
       }
@@ -1164,6 +1165,7 @@ const handleJobOrderApproval = async (request, updateUser, tx) => {
             materialName: m.materialName,
             quantity: Number(m.quantity),
             price: Number(m.price),
+            selling: Number(m.selling),
           })),
         });
 
@@ -1189,7 +1191,7 @@ const handleJobOrderApproval = async (request, updateUser, tx) => {
       let editTotalMaterialCost =
         editMaterials && editMaterials.length > 0
           ? editMaterials.reduce(
-              (sum, m) => sum + Number(m.price) * Number(m.quantity),
+              (sum, m) => sum + Number(m.selling) * Number(m.quantity),
               0
             )
           : 0;

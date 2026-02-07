@@ -349,6 +349,7 @@ model Material {
   materialName     String  @db.VarChar(100)
   quantity Int
   price    Decimal @db.Decimal(13, 2)
+  selling Decimal? @db.Decimal(13, 2)
 
   createdAt DateTime @default(now())
 
@@ -375,6 +376,8 @@ model JobOrder {
 
   transactions Transaction[]
   materials    Material[] 
+
+  createdDate DateTime?
 
   createdAt   DateTime @default(now())
   createdByUser String

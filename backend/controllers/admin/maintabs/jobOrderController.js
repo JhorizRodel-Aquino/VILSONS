@@ -48,11 +48,6 @@ const createJobOrder = async (req, res) => {
   ];
 
   let { phone } = req.body;
-
-  // Debug logging
-  console.log('Raw customerId from request:', req.body.customerId);
-  console.log('Parsed customerId:', customerId);
-  console.log('Type of customerId:', typeof customerId);
   
   // Check if customerId is actually a valid ID (not empty string)
   const hasValidCustomerId = customerId && customerId.trim() !== '';
@@ -148,11 +143,11 @@ const createJobOrder = async (req, res) => {
     // Validate materials if provided
     if (materials && materials.length > 0) {
       const invalid = materials.some(
-        (m) => !m.materialName || !m.price || !m.quantity
+        (m) => !m.materialName || !m.price || !m.quantity || !m.selling
       );
       if (invalid) {
         return res.status(400).json({
-          message: "Each material must include non-empty name, non-zero price, and non-zero quantity",
+          message: "Each material must include name, price, quantity, and selling price.",
         });
       }
     }
@@ -310,7 +305,6 @@ const createJobOrder = async (req, res) => {
           data: { userId: newUser.id },
         });
 
-        console.log('Created customer:', customer.id);
 
         let finalTruck;
 
@@ -411,9 +405,6 @@ const createJobOrder = async (req, res) => {
         },
       };
 
-      console.log('Labor value from request:', labor);
-      console.log('Labor type:', typeof labor);
-
       // Create job order
       const jobOrder = await tx.jobOrder.create({
         data: {
@@ -443,11 +434,12 @@ const createJobOrder = async (req, res) => {
             materialName: m.materialName,
             quantity: m.quantity,
             price: m.price,
+            selling: m.selling,
           })),
         });
 
         totalMaterialCost = materials.reduce(
-          (sum, m) => sum + m.price * m.quantity,
+          (sum, m) => sum + m.selling * m.quantity,
           0
         );
       }
@@ -541,12 +533,12 @@ const editJobOrder = async (req, res) => {
     // Validate materials
     if (materials && materials.length > 0) {
       const invalid = materials.some(
-        (m) => !m.materialName || !m.price || !m.quantity
+        (m) => !m.materialName || !m.price || !m.quantity || !m.selling
       );
       if (invalid) {
         return res.status(400).json({
           message:
-            "Each material must include non-empty name, non-zero price, and non-zero quantity",
+            "Each material must include name, price, quantity, and selling price.",
         });
       }
     }
@@ -631,7 +623,6 @@ const editJobOrder = async (req, res) => {
       // Add new images if any
       if (imageData.length > 0) {
         await tx.jobOrderImage.createMany({ data: imageData });
-        console.log(`📸 Added ${imageData.length} new job order images`);
       }
 
       // Prepare update data
@@ -679,10 +670,11 @@ const editJobOrder = async (req, res) => {
             materialName: m.materialName,
             quantity: m.quantity,
             price: m.price,
+            selling: m.selling,
           })),
         });
         totalMaterialCost = materials.reduce(
-          (sum, m) => sum + m.price * m.quantity,
+          (sum, m) => sum + m.selling * m.quantity,
           0
         );
       }
@@ -940,7 +932,7 @@ const getAllJobOrders = async (req, res) => {
           },
         },
         branch: { select: { id: true, branchName: true } },
-        materials: { select: { price: true, quantity: true } },
+        materials: { select: { price: true, quantity: true, selling: true } },
       },
       orderBy: { createdAt: "desc" },
     });
@@ -962,7 +954,7 @@ const getAllJobOrders = async (req, res) => {
 
       if (job.materials?.length) {
         totalMaterialCost = job.materials.reduce(
-          (sum, m) => sum + Number(m.price) * Number(m.quantity),
+          (sum, m) => sum + Number(m.selling) * Number(m.quantity),
           0
         );
       }
@@ -1044,7 +1036,7 @@ const getJobOrder = async (req, res) => {
         include: { user: true },
       },
       branch: { select: { id: true, branchName: true } },
-      materials: { select: { id: true, materialName: true, quantity: true, price: true } },
+      materials: { select: { id: true, materialName: true, quantity: true, price: true, selling: true } },
       images: true,
     };
 
@@ -1083,7 +1075,7 @@ const getJobOrder = async (req, res) => {
       }
 
     const processedMaterials = (jobOrder.materials || []).map((m) => {
-      const total = Number(m.price) * Number(m.quantity);
+      const total = Number(m.selling) * Number(m.quantity);
       totalMaterialCost += total;
       return {
         ...m,

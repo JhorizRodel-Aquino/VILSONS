@@ -13,7 +13,6 @@ const scheduler = {
     });
 
     this.job.start();
-    console.log("Scheduler started - checking daily at 00:01");
   },
 
   updateSchedules(userData) {

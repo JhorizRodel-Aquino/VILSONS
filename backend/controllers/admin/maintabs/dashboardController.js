@@ -1,7 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const { branchFilter } = require("../../../utils/filters/branchFilter"); 
-const { job } = require("../../../utils/persistentScheduler");
+// const { job } = require("../../../utils/persistentScheduler");
 
 
 const getRevenue = async (req, res) => {
@@ -186,7 +186,7 @@ const getProfit = async (req, res) => {
         where: { jobOrder: { ...baseDateWhere, ...branchFilter } },
       });
       const totalMaterials = materials.reduce(
-        (sum, m) => sum + Number(m.price) * Number(m.quantity),
+        (sum, m) => sum + Number(m.selling) * Number(m.quantity),
         0
       );
 
@@ -401,6 +401,7 @@ const getCustomerBalance = async (req, res) => {
               select: {
                 price: true,
                 quantity: true,
+                selling: true,
               },
             },
           },
@@ -415,7 +416,7 @@ const getCustomerBalance = async (req, res) => {
 
       const jobOrders = customerJobOrders.map((jo) => {
         const totalMaterials = jo.materials.reduce(
-          (sum, m) => sum + Number(m.price) * Number(m.quantity),
+          (sum, m) => sum + Number(m.selling) * Number(m.quantity),
           0
         );
         return Number(jo.labor) + totalMaterials;
@@ -726,7 +727,7 @@ const getRevenueAndProfitChart = async (req, res) => {
       }),
       prisma.material.findMany({
         where: materialWhere,
-        select: { price: true, quantity: true, createdAt: true },
+        select: { price: true, selling: true, quantity: true, createdAt: true },
       }),
       prisma.overhead.findMany({
         where: { ...baseWhere, ...branchFilter },
@@ -889,7 +890,7 @@ const getRecentJobOrders = async (req, res) => {
         customer: { select: { id: true, userId: true, user: { select: { fullName: true } } } },
         contractor: { select: { id: true, userId: true, user: { select: { fullName: true } } } },
         branch: { select: { id: true, branchName: true } },
-        materials: { select: { price: true, quantity: true } },
+        materials: { select: { price: true, quantity: true, selling: true } },
       },
     });
 
@@ -917,7 +918,7 @@ const getRecentJobOrders = async (req, res) => {
 
       if (job.materials?.length) {
         totalMaterialCost = job.materials.reduce(
-          (sum, m) => sum + Number(m.price) * Number(m.quantity),
+          (sum, m) => sum + Number(m.selling) * Number(m.quantity),
           0
         );
       }

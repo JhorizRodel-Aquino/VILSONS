@@ -472,7 +472,7 @@ const getTruck = async (req, res) => {
     );
 
     const archivedJobOrders = jobOrders.filter(
-      (jo) => jo.status === "archive"
+      (jo) => jo.status === "archived"
     );
 
     const truckWithOwnersAndJobOrders = {
