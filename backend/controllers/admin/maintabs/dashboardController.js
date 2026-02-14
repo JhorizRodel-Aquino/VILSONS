@@ -167,32 +167,53 @@ const getProfit = async (req, res) => {
       endDate = new Date(year, month + 1, 1);
     }
 
-    // Base filter for date
+    // Base filters
     const baseDateWhere = { createdAt: { gte: startDate, lt: endDate } };
     const branchFilter = branch ? { branchId: branch } : {};
 
     const result = await prisma.$transaction(async (tx) => {
-      // Received revenue (transactions)
+      // ================= REVENUE =================
       const transactions = await tx.transaction.findMany({
         where: { ...baseDateWhere, ...branchFilter },
       });
-      const totalRevenueReceived = transactions.reduce(
+
+      const otherIncome = await tx.otherIncome.findMany({
+        where: { ...baseDateWhere, ...branchFilter },
+      });
+
+      const totalTransactions = transactions.reduce(
         (sum, t) => sum + Number(t.amount),
         0
       );
 
-      // Expenses
+      // FIXED: use otherIncome array
+      const totalOtherIncome = otherIncome.reduce(
+        (sum, t) => sum + Number(t.amount),
+        0
+      );
+
+      const totalRevenueReceived = totalTransactions + totalOtherIncome;
+
+      // ================= EXPENSES =================
+
+      // FIXED: same logic as getExpenses
+      const materialWhere = branch
+        ? { ...baseDateWhere, jobOrder: { branchId: branch } }
+        : baseDateWhere;
+
       const materials = await tx.material.findMany({
-        where: { jobOrder: { ...baseDateWhere, ...branchFilter } },
+        where: materialWhere,
       });
+
       const totalMaterials = materials.reduce(
-        (sum, m) => sum + Number(m.selling) * Number(m.quantity),
+        (sum, m) => sum + Number(m.price) * Number(m.quantity),
         0
       );
 
       const overheads = await tx.overhead.findMany({
         where: { ...baseDateWhere, ...branchFilter },
       });
+
       const totalOverheads = overheads.reduce(
         (sum, o) => sum + Number(o.amount),
         0
@@ -201,6 +222,7 @@ const getProfit = async (req, res) => {
       const equipments = await tx.equipment.findMany({
         where: { ...baseDateWhere, ...branchFilter },
       });
+
       const totalEquipments = equipments.reduce(
         (sum, e) => sum + Number(e.price) * Number(e.quantity),
         0
@@ -210,6 +232,7 @@ const getProfit = async (req, res) => {
         where: { ...baseDateWhere, ...branchFilter },
         include: { payComponents: true },
       });
+
       const totalEmployeePays = employeePays.reduce((sum, emp) => {
         const componentsTotal = emp.payComponents.reduce(
           (cSum, pc) => cSum + Number(pc.amount),
@@ -221,6 +244,7 @@ const getProfit = async (req, res) => {
       const contractorPays = await tx.contractorPay.findMany({
         where: { ...baseDateWhere, ...branchFilter },
       });
+
       const totalContractorPays = contractorPays.reduce(
         (sum, c) => sum + Number(c.amount),
         0
@@ -250,6 +274,7 @@ const getProfit = async (req, res) => {
     return res.status(500).json({ message: err.message });
   }
 };
+
 
 const getExpenses = async (req, res) => {
   try {
