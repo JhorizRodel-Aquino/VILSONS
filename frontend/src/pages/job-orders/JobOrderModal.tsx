@@ -702,7 +702,7 @@ export default function JobOrderModal({ branchOptions, setShowModal, presetData,
                                                         }}
                                                     />
                                                     <button type="button" className="mt-auto py-[5px] cursor-pointer" onClick={() => removeMaterial(material.id)}><Icon name="delete" color="dark" /></button>
-                                                    <p className="py-[5px] text-end">{formatPesoFromCents((material.price || 0) * (material.quantity || 0) * 100)}</p>
+                                                    <p className="py-[5px] text-end">{formatPesoFromCents((material.selling || 0) * (material.quantity || 0) * 100)}</p>
                                                 </li>
                                             ))}
                                         </ol>
@@ -712,7 +712,7 @@ export default function JobOrderModal({ branchOptions, setShowModal, presetData,
                                             <dd>
                                                 {formatPesoFromCents(
                                                     materials.reduce(
-                                                        (total, material) => total + ((material.price || 0) * (material.quantity || 0) * 100),
+                                                        (total, material) => total + ((material.selling || 0) * (material.quantity || 0) * 100),
                                                         0
                                                     )
                                                 )}
@@ -740,7 +740,7 @@ export default function JobOrderModal({ branchOptions, setShowModal, presetData,
                                     <dd className="text-lg font-semibold py-1">
                                         {formatPesoFromCents(
                                             materials.reduce(
-                                                (total, material) => total + ((material.price || 0) * (material.quantity || 0) * 100),
+                                                (total, material) => total + ((material.selling || 0) * (material.quantity || 0) * 100),
                                                 0
                                             ) + ((formData.labor || 0) * 100)
                                         )}

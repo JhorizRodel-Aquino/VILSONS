@@ -47,7 +47,7 @@ export default function CustomerDetailsSection() {
             customerId, name: customerName, username: customerUsername,
             contractorId, contractorName, contractorUsername,
             description, labor: labor / 100 || null,
-            materials: materials.map((mat: Material) => ({ id: mat.id, materialName: mat.materialName, quantity: mat.quantity, price: mat.price! / 100 }))
+            materials: materials.map((mat: Material) => ({ id: mat.id, materialName: mat.materialName, quantity: mat.quantity, price: mat.price! / 100, selling: mat.selling! / 100 }))
         } as FormData)
         setShowModal('edit');
     }
@@ -150,7 +150,7 @@ export default function CustomerDetailsSection() {
                             {(materials && materials.length > 0) ?
                                 materials?.map((mat: Record<string, any>, i: any) => (
                                     <div key={i} className="flex justify-between items-end">
-                                        <Detail label={mat.materialName} value={`\u00A0\u00A0${mat.quantity} × ${formatPesoFromCents(mat.price)}`} />
+                                        <Detail label={mat.materialName} value={`\u00A0\u00A0${mat.quantity} × ${formatPesoFromCents(mat.selling)}`} />
                                         <span>{formatPesoFromCents(mat.total)}</span>
                                     </div>
                                 ))
