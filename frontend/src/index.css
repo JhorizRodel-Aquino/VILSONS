@@ -202,7 +202,7 @@
   }
 
   .modal {
-    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40%] max-w-[1100px] max-h-[80dvh] flex flex-col z-50;
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40%] max-w-[1400px] max-h-[80dvh] flex flex-col z-50;
   }
 
   .backdrop {

@@ -57,7 +57,8 @@ export default function BranchesModal({ setShowModal, onSuccess, action, presetD
 
             invalidateCache(`/api/approval-logs`);
             invalidateCache(`/api/activity-logs`);
-            invalidateBranches();
+            // invalidateBranches();
+            invalidateCache(`/api/me/branch`); // ensure branch data is refreshed for the user
         }
     };
 

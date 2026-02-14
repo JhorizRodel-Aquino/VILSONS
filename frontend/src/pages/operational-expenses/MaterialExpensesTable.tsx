@@ -19,6 +19,7 @@ type MaterialExpense = {
     quantity: number;
     amount: number;
     totalAmount: number;
+    selling: number;
 };
 
 const materialExpenseColumns: Column<MaterialExpense>[] = [
@@ -28,6 +29,7 @@ const materialExpenseColumns: Column<MaterialExpense>[] = [
     { key: "quantity", label: "Quantity" },
     { key: "amount", label: "Amount", render: (value) => formatPesoFromCents(value as number) },
     { key: "totalAmount", label: "Total Amount", render: (value) => formatPesoFromCents(value as number) },
+    { key: "selling", label: "Selling Price", render: (value) => formatPesoFromCents(value as number) },
 ];
 
 export default function MaterialExpensesTable({ setLastUpdated }: { setLastUpdated: (date: string | undefined) => void }) {
@@ -56,7 +58,8 @@ export default function MaterialExpensesTable({ setLastUpdated }: { setLastUpdat
             material: item.materialName,
             quantity: item.quantity,
             amount: item.price,
-            totalAmount: item.totalAmount
+            totalAmount: item.totalAmount,
+            selling: item.selling
         })
     );
 

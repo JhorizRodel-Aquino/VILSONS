@@ -284,14 +284,23 @@ const getMyBranch = async (req, res) => {
     return res.status(400).json({ message: "ID is required" });
 
   try {
-    const branch = await prisma.branch.findUnique({
-      where: { id: req.id },
+    // const branch = await prisma.branch.findUnique({
+    //   where: { id: req.id },
+    // });
+
+    const userBranches = await prisma.userBranch.findMany({
+      where: {
+        userId: req.id,
+      },
+      include: {
+        branch: true, // join branch table
+      },
     });
 
-    if (!branch) {
+    if (!userBranches || userBranches.length === 0) {
       return res.status(404).json({ message: "Branch not found" });
     }
-    return res.status(201).json({ data: branch });
+    return res.status(201).json({ data: userBranches });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }

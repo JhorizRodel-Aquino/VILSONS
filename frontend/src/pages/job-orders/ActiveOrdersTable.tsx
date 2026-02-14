@@ -106,7 +106,7 @@ export default function ActiveOrdersTable({ setPresetData, reloadFlag, setShowMo
             customerId: jobOrder.customerId, name: jobOrder.customerName, username: jobOrder.customerUsername,
             contractorId: jobOrder.contractorId, contractorName: jobOrder.contractorName, contractorUsername: jobOrder.contractorUsername,
             description: jobOrder.description, labor: jobOrder.labor / 100 || null,
-            materials: jobOrder.materials.map((mat: Material) => ({ id: mat.id, materialName: mat.materialName, quantity: mat.quantity, price: mat.price! / 100 })), remarks: "", branchId: item.branchId
+            materials: jobOrder.materials.map((mat: Material) => ({ id: mat.id, materialName: mat.materialName, quantity: mat.quantity, price: mat.price! / 100, selling: mat.selling ?? 0 / 100 })), remarks: "", branchId: item.branchId
         } as FormData)
         setShowModal('edit');
     }

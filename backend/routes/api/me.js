@@ -94,6 +94,6 @@ router.route("/assigned-job-orders/:id")
 
 // branch routes
 router.route("/branch")
-.get(verifyPermission(PERMISSIONS_LIST.VIEW_BRANCHES), branchController.getMyBranch);
+.get(branchController.getMyBranch);
 
 module.exports = router;

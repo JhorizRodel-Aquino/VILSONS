@@ -1800,3 +1800,56 @@ Argument `payComponents`: Invalid value provided. Expected PayComponentUnchecked
 20251214	13:19:36	4481924f-96af-4b4c-a4fa-694b37d9304b	Error: Not allowed by CORS
 20251214	13:19:45	fc9823db-d5e9-472a-ae39-b18de4027eeb	Error: Not allowed by CORS
 20251214	13:20:32	cb6ab5de-3b3c-49ff-a283-1b420f6cb0c1	Error: Not allowed by CORS
+20260207	19:16:14	53b597ce-bef3-416f-b58c-6d1c2c778cc0	PrismaClientInitializationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\jhoriz\OneDrive\Documents\VILSONS\backend\controllers\authController.js:13:39
+
+  10     .status(400)
+  11     .json({ message: "Both username and password needed" });
+  12 
+→ 13 const foundUser = await prisma.user.findUnique(
+Can't reach database server at `localhost:3307`
+
+Please make sure your database server is running at `localhost:3307`.
+20260207	19:16:29	d65ee7c7-fc4d-44cd-99e0-17159eea3222	PrismaClientInitializationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\jhoriz\OneDrive\Documents\VILSONS\backend\controllers\authController.js:13:39
+
+  10     .status(400)
+  11     .json({ message: "Both username and password needed" });
+  12 
+→ 13 const foundUser = await prisma.user.findUnique(
+Can't reach database server at `localhost:3307`
+
+Please make sure your database server is running at `localhost:3307`.
+20260207	19:16:57	64eaf520-0f05-44b5-b9a0-e591884a2d16	PrismaClientInitializationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\jhoriz\OneDrive\Documents\VILSONS\backend\controllers\authController.js:13:39
+
+  10     .status(400)
+  11     .json({ message: "Both username and password needed" });
+  12 
+→ 13 const foundUser = await prisma.user.findUnique(
+Server has closed the connection.
+20260207	19:34:33	0d0b94f6-b20b-4c79-8c8e-08238b573977	PrismaClientInitializationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\jhoriz\OneDrive\Documents\VILSONS\backend\controllers\authController.js:13:39
+
+  10     .status(400)
+  11     .json({ message: "Both username and password needed" });
+  12 
+→ 13 const foundUser = await prisma.user.findUnique(
+Can't reach database server at `mysql:3306`
+
+Please make sure your database server is running at `mysql:3306`.
+20260207	19:34:40	f2b4c06e-0ba5-485f-885e-c439f03a111d	PrismaClientInitializationError: 
+Invalid `prisma.user.findUnique()` invocation in
+C:\Users\jhoriz\OneDrive\Documents\VILSONS\backend\controllers\authController.js:13:39
+
+  10     .status(400)
+  11     .json({ message: "Both username and password needed" });
+  12 
+→ 13 const foundUser = await prisma.user.findUnique(
+Can't reach database server at `mysql:3306`
+
+Please make sure your database server is running at `mysql:3306`.

@@ -18,6 +18,6 @@ export function getBranches() {
 }
 
 export async function invalidateBranches() {
-    await refresh()
+    // await refresh()
     cachedBranchOptions = undefined;
 }

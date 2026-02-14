@@ -16,7 +16,8 @@ export type Material = {
     id: number;
     materialName?: string,
     quantity?: number,
-    price?: number | null
+    price?: number | null,
+    selling?: number | null,
 }
 
 type JobOrdersModalProps = {
@@ -69,6 +70,7 @@ const formSchemaGeneral: ValidationSchema = {
             materialName: { required: true, label: "Material Name" },
             quantity: { required: true, type: "number", label: "Material Quantity", min: 1 },
             price: { required: true, type: "money", label: "Material Cost" },
+            selling: { required: true, type: "money", label: "Material Selling Price" }
         },
     },
     branchId: { required: true, label: "Branch" },
@@ -638,17 +640,18 @@ export default function JobOrderModal({ branchOptions, setShowModal, presetData,
 
                                 {materials.length > 0 &&
                                     <>
-                                        <div className="grid grid-cols-[3fr_1fr_2fr_auto_2fr] gap-x-5 gap-y-[20px] font-semibold">
+                                        <div className="grid grid-cols-[3fr_1fr_2fr_2fr_auto_2fr] gap-x-5 gap-y-[20px] font-semibold">
                                             <span>Material</span>
                                             <span>Qty</span>
                                             <span>Cost</span>
+                                            <span>Selling Price</span>
                                             <span className="opacity-0"><Icon name="Delete" /></span>
                                             <span></span>
                                         </div>
 
                                         <ol className="grid gap-2 list-decimal list-inside">
                                             {materials.map((material, i) => (
-                                                <li key={i} id={`${material.id}`} className="grid grid-cols-[3fr_1fr_2fr_auto_2fr] gap-x-5 gap-y-[20px]">
+                                                <li key={i} id={`${material.id}`} className="grid grid-cols-[3fr_1fr_2fr_2fr_auto_2fr] gap-x-5 gap-y-[20px]">
                                                     <Field.Text
                                                         id={`${material.id}-name`}
                                                         value={material.materialName}
@@ -681,6 +684,18 @@ export default function JobOrderModal({ branchOptions, setShowModal, presetData,
                                                             const updatedMaterials = materials.map((mat) =>
                                                                 mat.id === material.id
                                                                     ? { ...mat, price: values.floatValue ?? null }
+                                                                    : mat
+                                                            );
+                                                            setMaterials(updatedMaterials)
+                                                        }}
+                                                    />
+                                                    <Field.Money
+                                                        id={`${material.id}-selling`}
+                                                        value={material.selling}
+                                                        onChange={(values) => {
+                                                            const updatedMaterials = materials.map((mat) =>
+                                                                mat.id === material.id
+                                                                    ? { ...mat, selling: values.floatValue ?? null }
                                                                     : mat
                                                             );
                                                             setMaterials(updatedMaterials)
